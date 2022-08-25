@@ -1,5 +1,8 @@
 import _cloudinary from "cloudinary";
 import config from "../config";
+// const { Readable } = require("stream");
+import { Readable } from "stream";
+import { ICdImage } from "../interfaces/cloudinary";
 
 const { CLOUDINARY_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = config;
 
@@ -41,6 +44,27 @@ const uploadImageFile = async (file: Buffer) => {
     console.log(error);
     return null;
   }
+};
+
+export const bufferUpload = async (
+  buffer: Buffer
+): Promise<_cloudinary.UploadApiResponse | undefined> => {
+  return new Promise((resolve, reject) => {
+    const writeStream = cd.uploader.upload_stream((err, result) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(result);
+    });
+    const readStream = new Readable({
+      read() {
+        this.push(buffer);
+        this.push(null);
+      },
+    });
+    readStream.pipe(writeStream);
+  });
 };
 
 export const cloudinary = {

@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { BASE_PATH } from "../constants/common";
-import { cloudinary } from "../utils/cloudinary";
+import { bufferUpload, cloudinary } from "../utils/cloudinary";
 import { readPng } from "../utils/common";
 
 export const getImage = (req: Request, res: Response) => {};
@@ -11,9 +11,10 @@ export const uploadImage = async (req: Request, res: Response) => {
     const tmpPath = `${BASE_PATH}/images/nft-base.png`;
     const png = readPng(tmpPath);
     if (!png) throw new Error("fail to read png file");
-    const publicId = await cloudinary.uploadImageFile(png);
+    // const publicId = await cloudinary.uploadImageFile(png);
+    const cdBuffer = await bufferUpload(png);
     // const publicId = await cloudinary.uploadImagePath(tmpPath);
-    console.log(publicId);
+    console.log(cdBuffer);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "uploadImage || internal error" });
