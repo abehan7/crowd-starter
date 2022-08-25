@@ -1,5 +1,8 @@
 import express, { Request, Response } from "express";
+import { BASE_PATH } from "../constants/common";
 import { db } from "../model";
+import { cloudinary } from "../utils/cloudinary";
+import { readPng } from "../utils/common";
 
 export const getMetadata = async (req: Request, res: Response) => {
   const id = req.params?.id;
@@ -13,7 +16,7 @@ export const getMetadata = async (req: Request, res: Response) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ message: "getMetadata || internal error" });
   }
 };
 
