@@ -4,7 +4,7 @@ export const imageHtml = (src: string) => `<html style="height: 100%">
   <title>s3jeaktszkwy4fpcemcu.png (512×512)</title>
 </head>
 <body
-  style="margin: 0px; background: #0e0e0e; height: 100%; display:flex"
+  style="margin: 0px; background: #0e0e0e; height: 100%"
   cz-shortcut-listen="true"
 >
   <img
