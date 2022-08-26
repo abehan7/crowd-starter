@@ -3,12 +3,12 @@ import { BASE_PATH } from "../constants/common";
 import { db } from "../model";
 import { cloudinary } from "../utils/cloudinary";
 import { readPng } from "../utils/common";
-
+// https://crowd-starter.herokuapp.com/api-v1/1
 const tmp = {
   name: "token name",
   description:
     "HI PLANET NFT is a bridge of web2 and web3 in fahsion business. Our main goal is to generate passive income for holders. HI PLANET NFT is a collection of 3,333 hand drawn NFTs by design studio of HIgh Minded Intelligence. Hi Planet holders will get exclusive benefits through Hi Planet and High Minded Intelligence.\nVisit https://www.hiplanetnft.com/ to learn more.",
-  image: "http://localhost:8080/api-v1/1/image.png",
+  image: "https://crowd-starter.herokuapp.com/api-v1/1/image.png",
   dna: "b0aee1d63fa48062a86e3e06a8672a75d7917aa8",
   edition: 1,
   date: 1658824380681,
