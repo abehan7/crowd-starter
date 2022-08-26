@@ -18,7 +18,7 @@ export const getImage = async (req: Request, res: Response) => {
     const resource = await cloudinary.getAssetInfo(public_id);
     console.log(resource);
     const path = `${BASE_PATH}/images/__test__.png`;
-    res.sendFile(path);
+    res.send(path);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);

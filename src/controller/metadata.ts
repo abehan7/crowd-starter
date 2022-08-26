@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { BASE_PATH } from "../constants/common";
-import { imageHtml } from "../html/image";
+// import { imageHtml } from "../html/image";
 import { db } from "../model";
 import {
   drawElement,
@@ -12,7 +12,7 @@ import { cloudinary } from "../utils/cloudinary";
 import { readPng } from "../utils/common";
 // https://crowd-starter.herokuapp.com/api-v1/1
 const tmp = {
-  name: "token name changed -v2",
+  name: "token name changed -v3",
   description:
     "HI PLANET NFT is a bridge of web2 and web3 in fahsion business. Our main goal is to generate passive income for holders. HI PLANET NFT is a collection of 3,333 hand drawn NFTs by design studio of HIgh Minded Intelligence. Hi Planet holders will get exclusive benefits through Hi Planet and High Minded Intelligence.\nVisit https://www.hiplanetnft.com/ to learn more.",
   image: "https://crowd-starter.herokuapp.com/api-v1/1/image.png",
@@ -55,7 +55,11 @@ export const getImage = async (req: Request, res: Response) => {
     // console.log(public_id);
     const resource = (await cloudinary.getAssetInfo(public_id)) as any;
     if (!resource) throw new Error("resource is not found in cloudinary");
-    res.status(200).send(imageHtml(resource.secure_url));
+    const imgUrl = `https://res.cloudinary.com/djzywbgqg/image/upload/v1661485215/s3jeaktszkwy4fpcemcu.png`;
+
+    // send external image
+    res.redirect(imgUrl);
+    // res.status(200).sendFile(`<img src="${imgUrl}" />`);
   } catch (error: any) {
     const message = error.message || "internal error";
     console.log(message);
