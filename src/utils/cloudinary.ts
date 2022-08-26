@@ -26,26 +26,6 @@ const uploadImagePath = async (file: string) => {
   }
 };
 
-// const uploadImageFile = async (file: Buffer) => {
-//   try {
-//     const data = cd.uploader
-//       .upload_stream({ format: "png" }, (err, res) => {
-//         if (err) {
-//           console.log(err);
-//         } else {
-//           console.log(`Upload succeed: ${res}`);
-//           // filteredBody.photo = result.url;
-//         }
-//       })
-//       .end(file);
-//     console.log(data);
-//     return data;
-//   } catch (error) {
-//     console.log(error);
-//     return null;
-//   }
-// };
-
 const uploadBuffer = async (
   buffer: Buffer
 ): Promise<_cloudinary.UploadApiResponse | undefined> => {
@@ -67,10 +47,50 @@ const uploadBuffer = async (
   });
 };
 
+const getAssetInfo = async (
+  publicId: string
+): Promise<_cloudinary.ResponseCallback | undefined> => {
+  // Return colors in the response
+  const options = {
+    colors: true,
+  };
+
+  try {
+    // Get details about the asset
+    const result = await cd.api.resource(publicId, options);
+    // console.log(result);
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const createImageTag = (publicId: string, colors: any[]) => {
+  // Set the effect color and background color
+  // console.log(colors);
+  // const [[effectColor, backgroundColor]] = colors;
+  // console.log(effectColor, backgroundColor);
+
+  // Create an image tag with transformations applied to the src URL
+  let imageTag = cd.image(publicId, {
+    transformation: [
+      { width: 250, height: 250, gravity: "faces", crop: "thumb" },
+      { radius: "max" },
+      { effect: "outline:10", color: "#ADD8E6" },
+      { background: "99.1" },
+    ],
+  });
+
+  return imageTag;
+};
+
 // uploadImageFile,
 export const cloudinary = {
   uploadImagePath,
   uploadBuffer,
+  getAssetInfo,
+  createImageTag,
+  cd,
 };
 
 export default cd;

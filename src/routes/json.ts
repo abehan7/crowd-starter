@@ -1,8 +1,7 @@
 import express from "express";
-import { getImage, uploadImage } from "../controller/metadata";
+import { uploadJson } from "../controller/metadata";
 const router = express.Router();
 
-// router.get("/:id", getImage);
-router.post("/:id", uploadImage);
+router.post("/:id", uploadJson);
 
 export default router;

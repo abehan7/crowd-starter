@@ -11,18 +11,7 @@ import {
 import { cloudinary } from "../utils/cloudinary";
 import { readPng, writePng } from "../utils/common";
 
-export const getImage = async (req: Request, res: Response) => {
-  try {
-    const { public_id } = req.params;
-    console.log(public_id);
-    const resource = await cloudinary.getAssetInfo(public_id);
-    console.log(resource);
-    res.send(resource);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(error);
-  }
-};
+export const getImage = (req: Request, res: Response) => {};
 
 export const uploadImage = async (req: Request, res: Response) => {
   try {
@@ -31,10 +20,13 @@ export const uploadImage = async (req: Request, res: Response) => {
     const png = readPng(tmpPath);
     if (!png) throw new Error("fail to read png file");
 
+    //
     // await loadLayerImg(png);
     const loadedImage = (await loadLayerImg(png)) as Buffer;
     drawElement(loadedImage);
     drawText("this is address");
+    // saveCanvasPng(`${BASE_PATH}/images/new-image.png`);
+    // console.log(canvasImg);
 
     // const publicId = await cloudinary.uploadImageFile(png);
     const cdBuffer = await cloudinary.uploadBuffer(getCanvasPng());
@@ -43,6 +35,7 @@ export const uploadImage = async (req: Request, res: Response) => {
     res.status(200).json(cdBuffer);
     clearCanvas();
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error });
   }
 };

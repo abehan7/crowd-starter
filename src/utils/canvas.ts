@@ -37,7 +37,7 @@ export const clearCanvas = () => {
 
 export const drawText = (text: string) => {
   ctx.font = "30px Arial";
-  ctx.fillText(text, 10, 50);
+  ctx.fillText(text, 10, 500);
 };
 
 export const saveCanvasPng = (path: string) => {
@@ -48,20 +48,3 @@ export const saveCanvasPng = (path: string) => {
 };
 
 export const getCanvasPng = () => canvas.toBuffer("image/png");
-
-// export const saveImage = (_editionCount: number | string) => {
-//   fs.writeFileSync(
-//     `${buildDir}/images/${_editionCount}.png`,
-//     canvas.toBuffer("image/png") // 지금까지 ctx에 쌓아서 저장한거를 이미지로 만드는 작업
-//   );
-// };
-
-// const buildSetup = () => {
-//   if (fs.existsSync(buildDir)) {
-//     fs.rmdirSync(buildDir, { recursive: true });
-//   }
-//   fs.mkdirSync(buildDir);
-
-//   fs.mkdirSync(`${buildDir}/json`);
-//   fs.mkdirSync(`${buildDir}/images`);
-// };
