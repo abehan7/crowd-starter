@@ -4,6 +4,22 @@ import { db } from "../model";
 import { cloudinary } from "../utils/cloudinary";
 import { readPng } from "../utils/common";
 
+const tmp = {
+  name: "token name",
+  description:
+    "HI PLANET NFT is a bridge of web2 and web3 in fahsion business. Our main goal is to generate passive income for holders. HI PLANET NFT is a collection of 3,333 hand drawn NFTs by design studio of HIgh Minded Intelligence. Hi Planet holders will get exclusive benefits through Hi Planet and High Minded Intelligence.\nVisit https://www.hiplanetnft.com/ to learn more.",
+  image: "http://localhost:8080/api-v1/1/image.png",
+  dna: "b0aee1d63fa48062a86e3e06a8672a75d7917aa8",
+  edition: 1,
+  date: 1658824380681,
+  attributes: [
+    {
+      trait_type: "Unknown",
+      value: "Unknown",
+    },
+  ],
+};
+
 export const getMetadata = async (req: Request, res: Response) => {
   const id = req.params?.id;
   try {
@@ -12,7 +28,9 @@ export const getMetadata = async (req: Request, res: Response) => {
     if (metadata) {
       return res.status(200).json(metadata.metadata);
     } else {
-      return res.status(404).json({ message: "Metadata not found" });
+      // const tmpJson = {};
+      return res.status(404).json(tmp);
+      // return res.status(404).json({ message: "Metadata not found" });
     }
   } catch (error: any) {
     const message = error.message || "internal error";
@@ -24,7 +42,7 @@ export const getImage = async (req: Request, res: Response) => {
   try {
     const public_id = "s3jeaktszkwy4fpcemcu";
     const tmp_public_id = req.params?.id;
-
+    // https://crowd-starter.herokuapp.com/api-v1/1/info.json
     if (!public_id) throw new Error("id is not provided");
 
     // console.log(public_id);
