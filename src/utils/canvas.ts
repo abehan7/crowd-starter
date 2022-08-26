@@ -9,6 +9,7 @@ const format = {
 };
 const canvas = createCanvas(format.width, format.height);
 export const ctx = canvas.getContext("2d");
+export const canvasImg = canvas.toBuffer("image/png");
 ctx.imageSmoothingEnabled = format.smoothing;
 
 export const loadLayerImg = async (imgLink: string | Buffer) => {
@@ -45,6 +46,8 @@ export const saveCanvasPng = (path: string) => {
     canvas.toBuffer("image/png") // 지금까지 ctx에 쌓아서 저장한거를 이미지로 만드는 작업
   );
 };
+
+export const getCanvasPng = () => canvas.toBuffer("image/png");
 
 // export const saveImage = (_editionCount: number | string) => {
 //   fs.writeFileSync(

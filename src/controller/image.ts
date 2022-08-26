@@ -4,6 +4,7 @@ import {
   clearCanvas,
   drawElement,
   drawText,
+  getCanvasPng,
   loadLayerImg,
   saveCanvasPng,
 } from "../utils/canvas";
@@ -25,12 +26,13 @@ export const uploadImage = async (req: Request, res: Response) => {
     drawElement(loadedImage);
     drawText("this is address");
     saveCanvasPng(`${BASE_PATH}/images/new-image.png`);
-    clearCanvas();
+    // console.log(canvasImg);
 
     // const publicId = await cloudinary.uploadImageFile(png);
-    // const cdBuffer = await cloudinary.uploadBuffer(png);
+    const cdBuffer = await cloudinary.uploadBuffer(getCanvasPng());
     // const publicId = await cloudinary.uploadImagePath(tmpPath);
-    // console.log(cdBuffer);
+    console.log(cdBuffer);
+    clearCanvas();
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "uploadImage || internal error" });
