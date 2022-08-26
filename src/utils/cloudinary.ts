@@ -26,27 +26,27 @@ const uploadImagePath = async (file: string) => {
   }
 };
 
-const uploadImageFile = async (file: Buffer) => {
-  try {
-    const data = cd.uploader
-      .upload_stream({ format: "png" }, (err, res) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(`Upload succeed: ${res}`);
-          // filteredBody.photo = result.url;
-        }
-      })
-      .end(file);
-    console.log(data);
-    return data;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-};
+// const uploadImageFile = async (file: Buffer) => {
+//   try {
+//     const data = cd.uploader
+//       .upload_stream({ format: "png" }, (err, res) => {
+//         if (err) {
+//           console.log(err);
+//         } else {
+//           console.log(`Upload succeed: ${res}`);
+//           // filteredBody.photo = result.url;
+//         }
+//       })
+//       .end(file);
+//     console.log(data);
+//     return data;
+//   } catch (error) {
+//     console.log(error);
+//     return null;
+//   }
+// };
 
-export const bufferUpload = async (
+const uploadBuffer = async (
   buffer: Buffer
 ): Promise<_cloudinary.UploadApiResponse | undefined> => {
   return new Promise((resolve, reject) => {
@@ -67,9 +67,10 @@ export const bufferUpload = async (
   });
 };
 
+// uploadImageFile,
 export const cloudinary = {
   uploadImagePath,
-  uploadImageFile,
+  uploadBuffer,
 };
 
 export default cd;
