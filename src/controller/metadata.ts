@@ -1,6 +1,13 @@
 import express, { Request, Response } from "express";
 import { BASE_PATH } from "../constants/common";
+import { imageHtml } from "../html/image";
 import { db } from "../model";
+import {
+  drawElement,
+  getCanvasPng,
+  loadLayerImg,
+  saveCanvasPng,
+} from "../utils/canvas";
 import { cloudinary } from "../utils/cloudinary";
 import { readPng } from "../utils/common";
 // https://crowd-starter.herokuapp.com/api-v1/1
@@ -51,11 +58,30 @@ export const getImage = async (req: Request, res: Response) => {
     // console.log(resource);
     // const img = cloudinary.createImageTag(public_id, resource);
     // console.log(img);
-    const img = cloudinary.cd.image(public_id, { width: 400, crop: "pad" });
-    // const img = `<img src="${resource.secure_url}" />`;
+    // const img = cloudinary.cd.image(public_id, { width: 400, crop: "pad" });
+    // redirect to cloudinary
+    const loadedImage = (await loadLayerImg(resource.secure_url)) as Buffer;
+    drawElement(loadedImage);
+    // const img = getCanvasPng();
+    const tmpImg = readPng(`${BASE_PATH}/images/nft-base.png`);
+    // saveCanvasPng(`${BASE_PATH}/images/__test__.png`);
+    // res.redirect(resource.secure_url);
+    // console.log(resource.secure_url);
+    const img = `<img src="${resource.secure_url}" />`;
+
+    // const data = {
+    //   image: resource.secure_url,
+    // };
 
     // console.log(img);
-    res.send(img);
+    // res.send();
+    const contentType = "image/png";
+    // res.writeHead(200, {
+    //   "Content-Type": contentType,
+    // });
+    res.status(200).send(imageHtml(resource.secure_url));
+
+    // res.send(img);
   } catch (error: any) {
     const message = error.message || "internal error";
     console.log(message);
