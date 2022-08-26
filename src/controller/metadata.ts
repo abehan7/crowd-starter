@@ -80,8 +80,8 @@ export const getImage = async (req: Request, res: Response) => {
     //   "Content-Type": contentType,
     // });
     const path = `${BASE_PATH}/images/__test__.png`;
-    res.sendFile(path);
-    // res.status(200).send(imageHtml(resource.secure_url));
+    // res.sendFile(path);
+    res.status(200).send(imageHtml(resource.secure_url));
 
     // res.send(img);
   } catch (error: any) {
