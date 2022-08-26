@@ -1,9 +1,9 @@
 import express from "express";
-import { getImage, getMetadata } from "../controller/metadata";
+import { getImage, getMetadata, uploadMetadata } from "../controller/metadata";
 const router = express.Router();
 
 router.get("/:id/info.json", getMetadata);
 router.get("/:id/image.png", getImage);
-// router.post("/:id/image.png", uploadImage);
+router.post("/", uploadMetadata);
 
 export default router;

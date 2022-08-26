@@ -1,13 +1,13 @@
 export interface IMetadata {
-  id: number;
+  id?: number;
   creator: string;
-  createdAt: Date;
-  tokenPrice: number;
+  createdAt?: Date;
   tokenSupply: number;
+  walletAddress: string;
 
   metadata: {
     description: string;
-    external_url: string;
+    external_url?: string;
     image: string;
     name: string;
     attributes: IAttribute[];
@@ -15,6 +15,6 @@ export interface IMetadata {
 }
 
 interface IAttribute {
-  trait_type: string;
+  trait_type: "influencer";
   value: string;
 }

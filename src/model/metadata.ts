@@ -5,8 +5,8 @@ const metadataSchema = new mongoose.Schema({
   id: { type: Number, required: true },
   creator: { type: String, required: true },
   createdAt: { type: Date, required: true, default: Date.now },
-  tokenPrice: { type: Number, required: true },
   tokenSupply: { type: Number, required: true },
+  walletAddress: { type: String, required: true },
 
   metadata: {
     description: { type: String, required: true },
@@ -22,17 +22,27 @@ const metadataSchema = new mongoose.Schema({
 
 const Metadata = mongoose.model<mongoose.Document>("metadatas", metadataSchema);
 
-export const query = {
+const query = {
   findMetadata: async (id: number): Promise<IMetadata | null> => {
     try {
       const metadata = (await Metadata.findOne({ id })) as IMetadata | null;
       return metadata;
-    } catch (error) {
-      throw new Error("findMetadata || error occured while fetching metadata");
+    } catch (error: any) {
+      throw new Error(error.message);
     }
   },
 };
 
-export const mutation = {};
+const mutation = {
+  createMetadata: async (metadata: IMetadata): Promise<IMetadata> => {
+    try {
+      const doc = new Metadata(metadata);
+      const newMetadata = await doc.save();
+      return newMetadata.toObject() as IMetadata;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+};
 
 export default { model: Metadata, query, mutation };
