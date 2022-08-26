@@ -36,7 +36,7 @@ export const getMetadata = async (req: Request, res: Response) => {
       return res.status(200).json(metadata.metadata);
     } else {
       // const tmpJson = {};
-      return res.status(404).json(tmp);
+      return res.status(200).json(tmp);
       // return res.status(404).json({ message: "Metadata not found" });
     }
   } catch (error: any) {
