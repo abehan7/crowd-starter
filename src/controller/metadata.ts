@@ -1,17 +1,8 @@
-import express, { Request, Response } from "express";
+import { Request, Response } from "express";
 import { fetchWallet } from "../api/common";
-import { BASE_PATH } from "../constants/common";
 import { IMetadata } from "../interfaces/metadata";
-// import { imageHtml } from "../html/image";
 import { db } from "../model";
-import {
-  drawElement,
-  getCanvasPng,
-  loadLayerImg,
-  saveCanvasPng,
-} from "../utils/canvas";
 import { cloudinary } from "../utils/cloudinary";
-import { readPng } from "../utils/common";
 // https://crowd-starter.herokuapp.com/api-v1/1
 // const tmp = {
 //   name: "token name changed -v3",

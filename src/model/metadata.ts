@@ -1,17 +1,19 @@
 import mongoose from "mongoose";
 import { IMetadata } from "../interfaces/metadata";
 
+// url 넣기
 const metadataSchema = new mongoose.Schema({
   id: { type: Number, required: true },
   creator: { type: String, required: true },
   createdAt: { type: Date, required: true, default: Date.now },
   tokenSupply: { type: Number, required: true },
   walletAddress: { type: String, required: true },
+  imageId: { type: mongoose.Schema.Types.ObjectId, ref: "NftImages" },
 
   metadata: {
     description: { type: String, required: true },
     external_url: { type: String, required: true },
-    image: { type: String, required: true },
+    image: { type: String, required: true, default: "not uploaded" },
     name: { type: String, required: true },
     attributes: {
       type: [{ trait_type: String, value: String }],
@@ -20,7 +22,7 @@ const metadataSchema = new mongoose.Schema({
   },
 });
 
-const Metadata = mongoose.model<mongoose.Document>("metadatas", metadataSchema);
+const Metadata = mongoose.model<mongoose.Document>("Metadatas", metadataSchema);
 
 const query = {
   findMetadata: async (id: number): Promise<IMetadata | null> => {
@@ -43,6 +45,23 @@ const mutation = {
       throw new Error(error.message);
     }
   },
+  updateMetadataImage: async (
+    id: number | string,
+    publicId: string
+  ): Promise<IMetadata | null> => {
+    try {
+      const metadata = (await Metadata.findOneAndUpdate(
+        { id },
+        { $set: { "metadata.image": publicId } },
+        { new: true }
+      )) as IMetadata | null;
+      return metadata;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
 };
+
+// autoIncrement.initialize(connection);
 
 export default { model: Metadata, query, mutation };

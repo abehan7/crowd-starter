@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import ethers from "ethers";
-import { web3Utils } from "../utils/web3Interact";
+import { web3Utils } from "../utils/web3-interact";
 
 export const authWallet = async (
   req: Request,
@@ -12,7 +12,7 @@ export const authWallet = async (
     if (!message || !signature) throw new Error("Missing required fields");
     const decodedWallet = await web3Utils.decodeWallet(message, signature);
     if (!decodedWallet) throw new Error("Invalid wallet");
-    req.body.walletAddress = decodedWallet;
+    req.decodedData = decodedWallet;
     next();
   } catch (error: any) {
     const message = error.message || "internal error";

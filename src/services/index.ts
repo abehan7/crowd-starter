@@ -5,6 +5,7 @@ import { MONGO_URL } from "../utils/db";
 import mongoose from "mongoose";
 import metadataRouter from "../routes/metadata";
 import imageRouter from "../routes/image";
+import web3Router from "../routes/web3-interact";
 
 dotenv.config();
 
@@ -18,6 +19,8 @@ app.use(cors());
 app.use("/api-v1", metadataRouter);
 app.use("/api-v1/json", metadataRouter);
 app.use("/api-v1/image", imageRouter);
+app.use("/api-v1/web3-interact", web3Router);
+
 // app.use("/user", userRouter);
 
 mongoose
