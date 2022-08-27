@@ -67,7 +67,7 @@ export const getImage = async (req: Request, res: Response) => {
   }
 };
 
-export const uploadMetadata = (req: Request, res: Response) => {
+export const uploadMetadata = async (req: Request, res: Response) => {
   try {
     const {
       tokenName,
@@ -98,6 +98,11 @@ export const uploadMetadata = (req: Request, res: Response) => {
         attributes,
       },
     };
+
+    // save to db
+    const doc = await db.Metadata.mutation.createMetadata(metadata);
+    if (!doc) throw new Error("Failed to save metadata to db");
+
     console.log(metadata);
     res.status(200).json(metadata);
   } catch (error: any) {

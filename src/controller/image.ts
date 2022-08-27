@@ -28,6 +28,9 @@ export const getImage = async (req: Request, res: Response) => {
 export const uploadImage = async (req: Request, res: Response) => {
   try {
     // const result = await cloudinary.uploader.upload(req.file.path);
+    const { walletAddress } = req.body;
+    if (!walletAddress) throw new Error("Missing required fields");
+
     const tmpPath = `${BASE_PATH}/images/nft-base.png`;
     const png = readPng(tmpPath);
     if (!png) throw new Error("fail to read png file");
@@ -35,7 +38,7 @@ export const uploadImage = async (req: Request, res: Response) => {
     // await loadLayerImg(png);
     const loadedImage = (await loadLayerImg(png)) as Buffer;
     drawElement(loadedImage);
-    drawText("this is address");
+    drawText(walletAddress);
 
     // const publicId = await cloudinary.uploadImageFile(png);
     const cdBuffer = await cloudinary.uploadBuffer(getCanvasPng());

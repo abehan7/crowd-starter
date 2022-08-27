@@ -1,5 +1,5 @@
 import _cloudinary from "cloudinary";
-import config from "../config";
+import config from "../config/config";
 // const { Readable } = require("stream");
 import { Readable } from "stream";
 import { ICdImage } from "../interfaces/cloudinary";
