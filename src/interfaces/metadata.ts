@@ -1,5 +1,5 @@
 export interface IMetadata {
-  id?: number;
+  id: number;
   creator: string;
   createdAt?: Date;
   tokenSupply: number;

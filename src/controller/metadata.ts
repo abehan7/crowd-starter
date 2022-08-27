@@ -79,7 +79,14 @@ export const uploadMetadata = async (req: Request, res: Response) => {
       !walletAddress
     )
       throw new Error("Missing required fields");
+
+    const lastMetadata = await db.Metadata.query.findLastMetadata();
+    let metadata_id = 0;
+
+    lastMetadata ? (metadata_id = lastMetadata.id + 1) : (metadata_id = 1);
+
     const metadata: IMetadata = {
+      id: metadata_id,
       walletAddress,
       tokenSupply,
       creator: influencerName,

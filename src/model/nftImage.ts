@@ -3,7 +3,11 @@ import { INftImage } from "../interfaces/nftImage";
 
 // url 넣기
 const ImageSchema = new mongoose.Schema({
-  metadataId: { type: mongoose.Schema.Types.ObjectId, ref: "Metadatas" },
+  metadataId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Metadatas",
+    required: false,
+  },
   asset_id: { type: String, required: true },
   public_id: { type: String, required: true },
   secure_url: { type: String, required: true },

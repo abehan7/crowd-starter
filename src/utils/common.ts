@@ -44,3 +44,6 @@ export const readPng = (path: string): Buffer | null => {
     return null;
   }
 };
+
+export const cutWallet = (address: string) =>
+  `${address.slice(0, 6)}...${address.slice(-4)}`;

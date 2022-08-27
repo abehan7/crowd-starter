@@ -9,8 +9,11 @@ export const authWallet = async (
 ) => {
   try {
     const { message, signature } = req.body;
-    if (!message || !signature) throw new Error("Missing required fields");
+
+    if (!message || !signature)
+      throw new Error("Missing required fields(wallet auth)");
     const decodedWallet = await web3Utils.decodeWallet(message, signature);
+    console.log(decodedWallet);
     if (!decodedWallet) throw new Error("Invalid wallet");
     req.decodedData = decodedWallet;
     next();
@@ -21,12 +24,12 @@ export const authWallet = async (
 };
 
 export const verifyWallet = async (req: Request, res: Response) => {
-  const { account, signiture, message } = req.body;
-  if (!account || !signiture || !message)
+  const { account, signature, message } = req.body;
+  if (!account || !signature || !message)
     res
       .status(400)
       .send({ status: false, message: "❌ Missing parameters", data: null });
-  const decodedWallet = await web3Utils.decodeWallet(message, signiture);
+  const decodedWallet = await web3Utils.decodeWallet(message, signature);
   if (decodedWallet !== account)
     res
       .status(400)

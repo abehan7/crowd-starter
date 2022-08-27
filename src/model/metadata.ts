@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
+
 import { IMetadata } from "../interfaces/metadata";
+import { MONGO_URL } from "../utils/db";
 
 // url 넣기
 const metadataSchema = new mongoose.Schema({
@@ -25,9 +27,19 @@ const metadataSchema = new mongoose.Schema({
 const Metadata = mongoose.model<mongoose.Document>("Metadatas", metadataSchema);
 
 const query = {
-  findMetadata: async (id: number): Promise<IMetadata | null> => {
+  findMetadata: async function (id: number): Promise<IMetadata | null> {
     try {
       const metadata = (await Metadata.findOne({ id })) as IMetadata | null;
+      return metadata;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  findLastMetadata: async function (): Promise<IMetadata | null> {
+    try {
+      const metadata = (await Metadata.findOne().sort({
+        id: -1,
+      })) as IMetadata | null;
       return metadata;
     } catch (error: any) {
       throw new Error(error.message);
@@ -61,7 +73,5 @@ const mutation = {
     }
   },
 };
-
-// autoIncrement.initialize(connection);
 
 export default { model: Metadata, query, mutation };
