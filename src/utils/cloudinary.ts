@@ -14,23 +14,21 @@ cd.config({
   api_secret: CLOUDINARY_API_SECRET,
 });
 
-const uploadImagePath = async (file: string) => {
+const uploadImagePath = async (file: string): Promise<ICdImage | null> => {
   try {
     const result = await cd.uploader.upload(file);
     // const result = await cd.uploader.upload(file.path);
     console.log(result);
-    return result;
+    return result as unknown as ICdImage;
   } catch (error) {
     console.log(error);
     return null;
   }
 };
 
-const uploadBuffer = async (
-  buffer: Buffer
-): Promise<_cloudinary.UploadApiResponse | undefined> => {
+const uploadBuffer = async (buffer: Buffer): Promise<ICdImage | undefined> => {
   return new Promise((resolve, reject) => {
-    const writeStream = cd.uploader.upload_stream((err, result) => {
+    const writeStream = cd.uploader.upload_stream((err, result: ICdImage) => {
       if (err) {
         reject(err);
         return;
@@ -49,15 +47,13 @@ const uploadBuffer = async (
 
 const getAssetInfo = async (
   publicId: string
-): Promise<_cloudinary.ResponseCallback | undefined> => {
+): Promise<ICdImage | undefined> => {
   // Return colors in the response
-  const options = {
-    colors: true,
-  };
+  const options = { colors: true };
 
   try {
     // Get details about the asset
-    const result = await cd.api.resource(publicId, options);
+    const result = (await cd.api.resource(publicId, options)) as ICdImage;
     // console.log(result);
     return result;
   } catch (error) {
@@ -65,32 +61,13 @@ const getAssetInfo = async (
   }
 };
 
-const createImageTag = (publicId: string, colors: any[]) => {
-  // Set the effect color and background color
-  // console.log(colors);
-  // const [[effectColor, backgroundColor]] = colors;
-  // console.log(effectColor, backgroundColor);
-
-  // Create an image tag with transformations applied to the src URL
-  let imageTag = cd.image(publicId, {
-    transformation: [
-      { width: 250, height: 250, gravity: "faces", crop: "thumb" },
-      { radius: "max" },
-      { effect: "outline:10", color: "#ADD8E6" },
-      { background: "99.1" },
-    ],
-  });
-
-  return imageTag;
-};
-
 // uploadImageFile,
 export const cloudinary = {
   uploadImagePath,
   uploadBuffer,
   getAssetInfo,
-  createImageTag,
   cd,
 };
+// createImageTag,
 
 export default cd;

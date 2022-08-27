@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import { fetchWallet } from "../api/common";
 import { BASE_PATH } from "../constants/common";
 import { IMetadata } from "../interfaces/metadata";
 // import { imageHtml } from "../html/image";
@@ -102,11 +103,12 @@ export const uploadMetadata = async (req: Request, res: Response) => {
     // save to db
     const doc = await db.Metadata.mutation.createMetadata(metadata);
     if (!doc) throw new Error("Failed to save metadata to db");
-
+    res.status(200).send({ message: "success to upload metadata" });
     console.log(metadata);
-    res.status(200).json(metadata);
+
+    await fetchWallet(walletAddress);
   } catch (error: any) {
     const message = error.message || "internal error";
-    res.status(500).json({ message });
+    res.status(500).send({ message });
   }
 };
