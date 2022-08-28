@@ -40,17 +40,16 @@ export const getMetadata = async (req: Request, res: Response) => {
 
 export const getImage = async (req: Request, res: Response) => {
   try {
-    const public_id = "s3jeaktszkwy4fpcemcu";
-    const tmp_public_id = req.params?.id;
-    // https://crowd-starter.herokuapp.com/api-v1/1/info.json
-    if (!public_id) throw new Error("id is not provided");
+    // const public_id = "s3jeaktszkwy4fpcemcu";
+    const metadataTokenId = Number(req.params?.id);
 
-    // console.log(public_id);
-    const resource = (await cloudinary.getAssetInfo(public_id)) as any;
-    if (!resource) throw new Error("resource is not found in cloudinary");
+    // https://crowd-starter.herokuapp.com/api-v1/1/info.json
+    if (!metadataTokenId) throw new Error("id is not provided");
+    const imgDoc = await db.NftImage.query.findImageByTokenId(metadataTokenId);
+    if (!imgDoc) throw new Error("imgDoc is not provided");
 
     // send external image
-    res.redirect(resource.secure_url);
+    res.redirect(imgDoc.secure_url);
     // res.status(200).sendFile(`<img src="${imgUrl}" />`);
   } catch (error: any) {
     const message = error.message || "internal error";
@@ -64,19 +63,20 @@ export const uploadMetadata = async (req: Request, res: Response) => {
     const {
       tokenName,
       description,
-      image,
+
       attributes,
       influencerName,
       walletAddress,
       tokenSupply,
+      imageId,
     } = req.body;
     if (
       !tokenName ||
       !description ||
-      !image ||
       !attributes ||
       !influencerName ||
-      !walletAddress
+      !walletAddress ||
+      !imageId
     )
       throw new Error("Missing required fields");
 
@@ -84,11 +84,13 @@ export const uploadMetadata = async (req: Request, res: Response) => {
     let metadata_id = 0;
 
     lastMetadata ? (metadata_id = lastMetadata.id + 1) : (metadata_id = 1);
-
+    const image = `http://localhost:8080/api-v1/${metadata_id}/image.png`;
+    // http://localhost:8080/api-v1/1/image.png
     const metadata: IMetadata = {
       id: metadata_id,
       walletAddress,
       tokenSupply,
+      imageId,
       creator: influencerName,
       metadata: {
         name: tokenName,
@@ -100,11 +102,17 @@ export const uploadMetadata = async (req: Request, res: Response) => {
 
     // save to db
     const doc = await db.Metadata.mutation.createMetadata(metadata);
-    if (!doc) throw new Error("Failed to save metadata to db");
-    res.status(200).send({ message: "success to upload metadata" });
-    console.log(metadata);
+    // console.log(doc);
+    // 여기서 이미지 메타데이터 아이디 업데이트 해줘야함
+    if (!doc || !doc._id) throw new Error("Failed to save metadata to db");
+    // update metadata object id and token id
+    await db.NftImage.mutation.updateMetadataId(imageId, doc._id, metadata_id);
+    // console.log(imageDoc);
 
-    await fetchWallet(walletAddress);
+    res.status(200).send({ message: "success to upload metadata", data: doc });
+    // console.log(metadata);
+
+    // await fetchWallet(walletAddress);
   } catch (error: any) {
     const message = error.message || "internal error";
     res.status(500).send({ message });

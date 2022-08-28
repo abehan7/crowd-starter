@@ -56,16 +56,13 @@ export const uploadImage = async (req: Request, res: Response) => {
     // metadata_id: metadataId,
     const nftImgDocRes = await db.NftImage.mutation.createImage(newDoc);
     if (!nftImgDocRes._id) throw new Error("fail to save image to db");
+    console.log(nftImgDocRes);
 
-    // const metadataRes = await db.Metadata.mutation.updateMetadataImage(
-    //   metadataId,
-    //   nftImgDocRes._id
-    // );
-    // console.log(cdResponse);
+    clearCanvas();
+
     res
       .status(200)
-      .json({ message: "success to upload image", data: cdResponse });
-    clearCanvas();
+      .json({ message: "success to upload image", data: nftImgDocRes });
 
     // 이제 smart contract에 업로드하기
 

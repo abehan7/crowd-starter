@@ -1,13 +1,14 @@
 export interface IMetadata {
+  _id?: string;
   id: number;
   creator: string;
   createdAt?: Date;
   tokenSupply: number;
   walletAddress: string;
+  imageId: string;
 
   metadata: {
     description: string;
-    external_url?: string;
     image: string;
     name: string;
     attributes: IAttribute[];

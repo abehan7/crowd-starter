@@ -10,11 +10,14 @@ const metadataSchema = new mongoose.Schema({
   createdAt: { type: Date, required: true, default: Date.now },
   tokenSupply: { type: Number, required: true },
   walletAddress: { type: String, required: true },
-  imageId: { type: mongoose.Schema.Types.ObjectId, ref: "NftImages" },
+  imageId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "NftImages",
+    required: true,
+  },
 
   metadata: {
     description: { type: String, required: true },
-    external_url: { type: String, required: true },
     image: { type: String, required: true, default: "not uploaded" },
     name: { type: String, required: true },
     attributes: {
