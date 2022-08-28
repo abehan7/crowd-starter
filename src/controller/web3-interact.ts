@@ -14,6 +14,7 @@ export const createERC1155 = async (req: Request, res: Response) => {
     const { url, quantity, influencer, signer } = req.body;
     if (!url || !quantity || !influencer || !signer)
       throw new Error("Missing required fields");
+
     const params = { url, quantity, influencer, wallet, signer };
     const tx = await web3Utils.createERC1155(params);
     res.status(200).send({ message: "success", data: tx });

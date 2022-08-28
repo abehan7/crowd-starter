@@ -1,4 +1,4 @@
-import { AbiType, AbiItem } from "web3-utils";
+import { AbiItem } from "web3-utils";
 
 const abi: AbiItem[] = [
   {
@@ -315,6 +315,11 @@ const abi: AbiItem[] = [
         internalType: "address",
         name: "_creator",
         type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "_tokenId",
+        type: "uint256",
       },
     ],
     name: "createToken",
@@ -725,6 +730,6 @@ const abi: AbiItem[] = [
     type: "function",
   },
 ];
-const address = "0xDa0bDcd7b3baf39DFa9e051D0976ADbC898A840d";
+const address = "0x40aD5c783f2F8b03f650451Da224fE312075DB1f";
 
 export const WEB3_CONFIG = { abi, address };
