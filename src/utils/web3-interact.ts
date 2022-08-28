@@ -26,7 +26,7 @@ const createERC1155 = async (props: CreateERC1155Props) => {
       throw new Error("Missing required fields");
     const owner = "0x45E3Ca56946e0ee4bf36e893CC4fbb96A1523212";
 
-    const nonce = await web3.eth.getTransactionCount(wallet, "latest");
+    const nonce = await web3.eth.getTransactionCount(owner, "latest");
     const ownerSigner =
       "b4ae857b92433f1ab75e63486ecf010c8f42fb032a18063c5a19dbd99b43039e";
 
