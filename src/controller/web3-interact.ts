@@ -4,6 +4,13 @@ export const createERC1155 = async (req: Request, res: Response) => {
   try {
     const wallet = req.decodedData;
     if (!wallet) throw new Error("wallet is not provided");
+    /**
+     * url : metadata json url
+     * quantity : token quantity
+     * influencer : influencer name
+     * signer : influencer's wallet signiture to send transaction
+     * wallet : influencer's wallet address to pay gas fee
+     */
     const { url, quantity, influencer, signer } = req.body;
     if (!url || !quantity || !influencer || !signer)
       throw new Error("Missing required fields");

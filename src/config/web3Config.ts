@@ -61,12 +61,6 @@ const abi: AbiItem[] = [
       {
         indexed: false,
         internalType: "uint256",
-        name: "price",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
         name: "quantity",
         type: "uint256",
       },
@@ -309,11 +303,6 @@ const abi: AbiItem[] = [
       },
       {
         internalType: "uint256",
-        name: "_price",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
         name: "_quantity",
         type: "uint256",
       },
@@ -321,6 +310,11 @@ const abi: AbiItem[] = [
         internalType: "string",
         name: "_influencer",
         type: "string",
+      },
+      {
+        internalType: "address",
+        name: "_creator",
+        type: "address",
       },
     ],
     name: "createToken",
@@ -648,11 +642,6 @@ const abi: AbiItem[] = [
       },
       {
         internalType: "uint256",
-        name: "price",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
         name: "quantity",
         type: "uint256",
       },
@@ -736,6 +725,6 @@ const abi: AbiItem[] = [
     type: "function",
   },
 ];
-const address = "";
+const address = "0xDa0bDcd7b3baf39DFa9e051D0976ADbC898A840d";
 
 export const WEB3_CONFIG = { abi, address };

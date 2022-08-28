@@ -22,26 +22,43 @@ const decodeWallet = async (message: string, signiture: string) => {
 const createERC1155 = async (props: CreateERC1155Props) => {
   try {
     const { url, quantity, influencer, signer, wallet } = props;
+    if (!url || !quantity || !influencer || !signer || !wallet)
+      throw new Error("Missing required fields");
+    const owner = "0x45E3Ca56946e0ee4bf36e893CC4fbb96A1523212";
 
     const nonce = await web3.eth.getTransactionCount(wallet, "latest");
+    const ownerSigner =
+      "b4ae857b92433f1ab75e63486ecf010c8f42fb032a18063c5a19dbd99b43039e";
 
     const tx = {
       to: WEB3_CONFIG.address,
-      from: wallet,
+      from: owner,
       data: nftContract.methods
-        .createToken(url, quantity, influencer)
+        .createToken(url, quantity, influencer, wallet)
         .encodeABI(),
       nonce: nonce,
+      gas: 500000,
     };
     // nonce: nonce.toString(16),
 
-    // ethers.
     // FIXME: 여기서 일단 에러 생길건 100%
     // 여기서 어떻게 window request처리할지
-    const signedTx = await web3.eth.accounts.signTransaction(tx, signer);
+    const signedTx = await web3.eth.accounts.signTransaction(tx, ownerSigner);
+    // send signed transaction to blockchain via Alchemy
+    if (!signedTx.rawTransaction)
+      throw new Error("rawTransaction is not provided");
+    const receipt = await web3.eth.sendSignedTransaction(
+      signedTx.rawTransaction
+    );
+
+    // const txHash = await window.ethereum.request({
+    //   method: "eth_sendTransaction",
+    //   params: [signedTx],
+    // });
+
     // const txHash = await web3.eth.sendTransaction(tx);
-    console.log(signedTx);
-    return signedTx;
+    console.log(receipt);
+    return receipt;
   } catch (error: any) {
     console.log(error.message);
     return error.message;

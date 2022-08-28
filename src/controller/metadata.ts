@@ -63,7 +63,6 @@ export const uploadMetadata = async (req: Request, res: Response) => {
     const {
       tokenName,
       description,
-
       attributes,
       influencerName,
       walletAddress,
@@ -84,8 +83,8 @@ export const uploadMetadata = async (req: Request, res: Response) => {
     let metadata_id = 0;
 
     lastMetadata ? (metadata_id = lastMetadata.id + 1) : (metadata_id = 1);
+    // 엔드포인트만조금 있다가 바꿔주기
     const image = `http://localhost:8080/api-v1/${metadata_id}/image.png`;
-    // http://localhost:8080/api-v1/1/image.png
     const metadata: IMetadata = {
       id: metadata_id,
       walletAddress,
