@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { fetchWallet } from "../api/common";
+import config from "../config/config";
 import { IMetadata } from "../interfaces/metadata";
 import { db } from "../model";
 import { cloudinary } from "../utils/cloudinary";
@@ -84,7 +85,7 @@ export const uploadMetadata = async (req: Request, res: Response) => {
 
     lastMetadata ? (metadata_id = lastMetadata.id + 1) : (metadata_id = 1);
     // 엔드포인트만조금 있다가 바꿔주기
-    const image = `http://localhost:8080/api-v1/${metadata_id}/image.png`;
+    const image = `${config.ENDPOINT_URL}/api-v1/${metadata_id}/image.png`;
     const metadata: IMetadata = {
       id: metadata_id,
       walletAddress,

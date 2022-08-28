@@ -10,6 +10,7 @@ const {
   CLOUDINARY_NAME,
   CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET,
+  ENDPOINT_URL,
 } = process.env;
 
 if (
@@ -21,7 +22,8 @@ if (
   !CLOUDINARY_URL ||
   !CLOUDINARY_NAME ||
   !CLOUDINARY_API_KEY ||
-  !CLOUDINARY_API_SECRET
+  !CLOUDINARY_API_SECRET ||
+  !ENDPOINT_URL
 ) {
   throw new Error("Missing environment variables");
 }
@@ -36,6 +38,7 @@ interface IConfig {
   CLOUDINARY_NAME: string;
   CLOUDINARY_API_KEY: string;
   CLOUDINARY_API_SECRET: string;
+  ENDPOINT_URL: string;
 }
 
 const config: IConfig = {
@@ -48,6 +51,7 @@ const config: IConfig = {
   CLOUDINARY_NAME,
   CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET,
+  ENDPOINT_URL,
 };
 
 export default config;
