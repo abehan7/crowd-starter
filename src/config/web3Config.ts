@@ -316,11 +316,6 @@ const abi: AbiItem[] = [
         name: "_creator",
         type: "address",
       },
-      {
-        internalType: "uint256",
-        name: "_tokenId",
-        type: "uint256",
-      },
     ],
     name: "createToken",
     outputs: [],
@@ -730,6 +725,6 @@ const abi: AbiItem[] = [
     type: "function",
   },
 ];
-const address = "0x40aD5c783f2F8b03f650451Da224fE312075DB1f";
+const address = "0xe0572cdB6A2477978BEB52d25B0815AE67a83BB0";
 
 export const WEB3_CONFIG = { abi, address };
