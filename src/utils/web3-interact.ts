@@ -41,8 +41,6 @@ const createERC1155 = async (props: CreateERC1155Props) => {
     };
     // nonce: nonce.toString(16),
 
-    // FIXME: 여기서 일단 에러 생길건 100%
-    // 여기서 어떻게 window request처리할지
     const signedTx = await web3.eth.accounts.signTransaction(tx, ownerSigner);
     // send signed transaction to blockchain via Alchemy
     if (!signedTx.rawTransaction)
@@ -51,13 +49,6 @@ const createERC1155 = async (props: CreateERC1155Props) => {
       signedTx.rawTransaction
     );
 
-    // const txHash = await window.ethereum.request({
-    //   method: "eth_sendTransaction",
-    //   params: [signedTx],
-    // });
-
-    // const txHash = await web3.eth.sendTransaction(tx);
-    console.log(receipt);
     return receipt;
   } catch (error: any) {
     console.log(error.message);

@@ -725,6 +725,6 @@ const abi: AbiItem[] = [
     type: "function",
   },
 ];
-const address = "0xCf85A31531fc76c7af0596A341a909D7a7fd0b1f";
+const address = "0xe5E6aC35FCefaF6273fb154A6562F221f7C759C6";
 
 export const WEB3_CONFIG = { abi, address };
